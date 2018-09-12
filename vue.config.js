@@ -8,7 +8,7 @@ module.exports = {
               .add(path.resolve(__dirname, 'src', 'icons'))
               .end()
 
-        // 添加icon loader
+        // 添加icon loader，只处理icon文件夹
         config.module.rule('icon')
             .include
               .add(path.resolve(__dirname, 'src', 'icons'))
