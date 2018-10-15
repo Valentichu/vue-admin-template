@@ -44,7 +44,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: 'Example', icon: 'example'},
     children: [
       {
         path: 'table',
@@ -56,7 +56,7 @@ export const asyncRouterMap = [
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: '二级菜单权限演示', icon: 'tree', roles: ['admin'] }
+        meta: { title: '二级菜单权限演示', icon: 'tree', permission: 'tree' }
       }
     ]
   },
@@ -127,7 +127,7 @@ export const asyncRouterMap = [
       {
         path: 'menu2',
         component: () => import('@/views/nested/menu2/index'),
-        meta: { title: '按钮权限演示' }
+        meta: { title: '按钮权限演示', permission: 'menu2' }
       }
     ]
   },
@@ -135,7 +135,7 @@ export const asyncRouterMap = [
   {
     path: 'external-link',
     component: Layout,
-      meta: { roles: ['admin'] },
+      meta: { permission: 'external'  },
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
