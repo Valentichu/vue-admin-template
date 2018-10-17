@@ -1,22 +1,21 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name:{{ name }}</div>
-    <div class="dashboard-text">permissions:<span v-for="permission in permissions" :key="permission.name">{{ permission }}</span></div>
+    <div class="dashboard-text">permissions:<span 
+      v-for="permission in permissions" 
+      :key="permission.name">{{ permission }}</span></div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   computed: {
-    ...mapGetters([
-      'name',
-      'permissions'
-    ])
+    ...mapGetters(["name", "permissions"])
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
