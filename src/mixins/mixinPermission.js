@@ -1,5 +1,4 @@
 import { mapGetters } from 'vuex'
-
 const mixinPermission = {
   computed: {
     ...mapGetters(['permissions'])
