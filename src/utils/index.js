@@ -2,7 +2,7 @@
  * Created by jiachenpan on 16/11/18.
  */
 
-export function parseTime (time, cFormat) {
+export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
   }
@@ -11,7 +11,7 @@ export function parseTime (time, cFormat) {
   if (typeof time === 'object') {
     date = time
   } else {
-    if ((`${time}`).length === 10) time = parseInt(time) * 1000
+    if (`${time}`.length === 10) time = parseInt(time) * 1000
     date = new Date(time)
   }
   const formatObj = {
@@ -37,7 +37,7 @@ export function parseTime (time, cFormat) {
   return timeStr
 }
 
-export function formatTime (time, option) {
+export function formatTime(time, option) {
   time = +time * 1000
   const d = new Date(time)
   const now = Date.now()
@@ -57,15 +57,5 @@ export function formatTime (time, option) {
   if (option) {
     return parseTime(time, option)
   }
-  return (
-    `${d.getMonth() +
-      1
-    }月${
-      d.getDate()
-    }日${
-      d.getHours()
-    }时${
-      d.getMinutes()
-    }分`
-  )
+  return `${d.getMonth() + 1}月${d.getDate()}日${d.getHours()}时${d.getMinutes()}分`
 }

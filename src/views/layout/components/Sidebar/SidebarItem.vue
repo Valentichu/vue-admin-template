@@ -82,14 +82,14 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       onlyOneChild: null
     }
   },
   methods: {
-    hasOneShowingChild (children) {
-      const showingChildren = children.filter((item) => {
+    hasOneShowingChild(children) {
+      const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false
         }
@@ -102,13 +102,13 @@ export default {
       }
       return false
     },
-    resolvePath (routePath) {
+    resolvePath(routePath) {
       return path.resolve(this.basePath, routePath)
     },
-    isExternalLink (routePath) {
+    isExternalLink(routePath) {
       return validateURL(routePath)
     },
-    clickLink (routePath, e) {
+    clickLink(routePath, e) {
       if (!this.isExternalLink(routePath)) {
         e.preventDefault()
         const path = this.resolvePath(routePath)

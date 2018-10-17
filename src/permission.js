@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
       // 判断当前用户是否已拉取完user_info信息
       store
         .dispatch('GetInfo')
-        .then((res) => {
+        .then(res => {
           // 拉取user_info
           const permissions = res.data.permissions // note: permissions must be a array!
           store.dispatch('GenerateRoutes', { permissions }).then(() => {
@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
           })
         })
-        .catch((err) => {
+        .catch(err => {
           store.dispatch('FedLogOut').then(() => {
             Message.error(err.toString() || 'Verification failed, please login again')
             next({ path: '/' })

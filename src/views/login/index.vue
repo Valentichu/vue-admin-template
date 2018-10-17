@@ -58,7 +58,7 @@ import { isvalidUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
-  data () {
+  data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
         callback(new Error('请输入正确的用户名'))
@@ -79,9 +79,7 @@ export default {
         password: 'admin'
       },
       loginRules: {
-        username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
-        ],
+        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
@@ -91,22 +89,22 @@ export default {
   },
   watch: {
     $route: {
-      handler (route) {
+      handler(route) {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
     }
   },
   methods: {
-    showPwd () {
+    showPwd() {
       if (this.pwdType === 'password') {
         this.pwdType = ''
       } else {
         this.pwdType = 'password'
       }
     },
-    handleLogin () {
-      this.$refs.loginForm.validate((valid) => {
+    handleLogin() {
+      this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store

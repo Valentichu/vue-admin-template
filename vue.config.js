@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  chainWebpack: (config) => {
+  chainWebpack: config => {
     // 设置默认svg loader不包含icon文件夹
     config.module
       .rule('svg')

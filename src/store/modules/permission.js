@@ -5,7 +5,7 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
  * @param permissions
  * @param route
  */
-function hasPermission (permissions, route) {
+function hasPermission(permissions, route) {
   if (route.meta && route.meta.permission) {
     const permission = permissions.find(item => item.name === route.meta.permission)
     if (permission && permission.read) {
@@ -21,8 +21,8 @@ function hasPermission (permissions, route) {
  * @param asyncRouterMap
  * @param permissions
  */
-function filterAsyncRouter (asyncRouterMap, permissions) {
-  const accessedRouters = asyncRouterMap.filter((route) => {
+function filterAsyncRouter(asyncRouterMap, permissions) {
+  const accessedRouters = asyncRouterMap.filter(route => {
     if (hasPermission(permissions, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, permissions)
@@ -46,8 +46,8 @@ const permission = {
     }
   },
   actions: {
-    GenerateRoutes ({ commit }, data) {
-      return new Promise((resolve) => {
+    GenerateRoutes({ commit }, data) {
+      return new Promise(resolve => {
         const { permissions } = data
         const accessedRouters = filterAsyncRouter(asyncRouterMap, permissions)
         commit('SET_ROUTERS', accessedRouters)
