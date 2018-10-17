@@ -1,23 +1,19 @@
-import { asyncRouterMap, constantRouterMap } from "@/router";
+import { asyncRouterMap, constantRouterMap } from '@/router'
 
 /**
  * 通过meta.permissions判断是否与当前用户权限匹配
  * @param permissions
  * @param route
  */
-function hasPermission(permissions, route) {
+function hasPermission (permissions, route) {
   if (route.meta && route.meta.permission) {
-    const permission = permissions.find(item => {
-      return item.name === route.meta.permission;
-    });
+    const permission = permissions.find(item => item.name === route.meta.permission)
     if (permission && permission.read) {
-      return true;
-    } else {
-      return false;
+      return true
     }
-  } else {
-    return true;
+    return false
   }
+  return true
 }
 
 /**
@@ -25,17 +21,17 @@ function hasPermission(permissions, route) {
  * @param asyncRouterMap
  * @param permissions
  */
-function filterAsyncRouter(asyncRouterMap, permissions) {
-  const accessedRouters = asyncRouterMap.filter(route => {
+function filterAsyncRouter (asyncRouterMap, permissions) {
+  const accessedRouters = asyncRouterMap.filter((route) => {
     if (hasPermission(permissions, route)) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, permissions);
+        route.children = filterAsyncRouter(route.children, permissions)
       }
-      return true;
+      return true
     }
-    return false;
-  });
-  return accessedRouters;
+    return false
+  })
+  return accessedRouters
 }
 
 const permission = {
@@ -45,20 +41,20 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers;
-      state.routers = constantRouterMap.concat(routers);
+      state.addRouters = routers
+      state.routers = constantRouterMap.concat(routers)
     }
   },
   actions: {
-    GenerateRoutes({ commit }, data) {
-      return new Promise(resolve => {
-        const { permissions } = data;
-        let accessedRouters = filterAsyncRouter(asyncRouterMap, permissions);
-        commit("SET_ROUTERS", accessedRouters);
-        resolve();
-      });
+    GenerateRoutes ({ commit }, data) {
+      return new Promise((resolve) => {
+        const { permissions } = data
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, permissions)
+        commit('SET_ROUTERS', accessedRouters)
+        resolve()
+      })
     }
   }
-};
+}
 
-export default permission;
+export default permission

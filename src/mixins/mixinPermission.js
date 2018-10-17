@@ -1,30 +1,28 @@
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
-let mixinPermission = {
+const mixinPermission = {
   computed: {
-    ...mapGetters(["permissions"])
+    ...mapGetters(['permissions'])
   },
-  data() {
+  data () {
     return {
       canDelete: false,
       canUpdate: false,
       canInsert: false
-    };
+    }
   },
-  created() {
-    const length = this.$route.matched.length;
+  created () {
+    const length = this.$route.matched.length
     const currentRoutePermission = this.$route.matched[length - 1].meta
-      .permission;
-    const permissions = this.permissions.find(item => {
-      return item.name === currentRoutePermission;
-    });
+      .permission
+    const permissions = this.permissions.find(item => item.name === currentRoutePermission)
     this.canDelete =
-      permissions && permissions.delete ? permissions.delete : false;
+      permissions && permissions.delete ? permissions.delete : false
     this.canUpdate =
-      permissions && permissions.update ? permissions.update : false;
+      permissions && permissions.update ? permissions.update : false
     this.canInsert =
-      permissions && permissions.insert ? permissions.insert : false;
+      permissions && permissions.insert ? permissions.insert : false
   }
-};
+}
 
-export default mixinPermission;
+export default mixinPermission
