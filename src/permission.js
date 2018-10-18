@@ -18,13 +18,13 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger afterEach hook, so manually handle it
     } else if (store.getters.permissions.length === 0) {
+      // 判断当前用户是否已拉取完user_info信息
       try {
-        // 判断当前用户是否已拉取完user_info信息
-        const userInfo = await store.dispatch('GetInfo')
         // 拉取user_info
+        const userInfo = await store.dispatch('GetInfo')
         const permissions = userInfo.data.permissions // note: permissions must be a array!
-        await store.dispatch('GenerateRoutes', { permissions })
         // 根据permissions权限生成可访问的路由表
+        await store.dispatch('GenerateRoutes', { permissions })
         router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
         next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
       } catch (err) {
