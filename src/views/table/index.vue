@@ -83,12 +83,11 @@ export default {
     this.fetchData()
   },
   methods: {
-    fetchData() {
+    async fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+      const response = await getList(this.listQuery)
+      this.list = response.data.items
+      this.listLoading = false
     }
   }
 }

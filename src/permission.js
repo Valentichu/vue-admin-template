@@ -9,7 +9,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   NProgress.start() // start progress bar
   if (getToken()) {
     // determine if there has token
@@ -18,24 +18,20 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger afterEach hook, so manually handle it
     } else if (store.getters.permissions.length === 0) {
-      // 判断当前用户是否已拉取完user_info信息
-      store
-        .dispatch('GetInfo')
-        .then(res => {
-          // 拉取user_info
-          const permissions = res.data.permissions // note: permissions must be a array!
-          store.dispatch('GenerateRoutes', { permissions }).then(() => {
-            // 根据permissions权限生成可访问的路由表
-            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-          })
-        })
-        .catch(err => {
-          store.dispatch('FedLogOut').then(() => {
-            Message.error(err.toString() || 'Verification failed, please login again')
-            next({ path: '/' })
-          })
-        })
+      try {
+        // 判断当前用户是否已拉取完user_info信息
+        const userInfo = await store.dispatch('GetInfo')
+        // 拉取user_info
+        const permissions = userInfo.data.permissions // note: permissions must be a array!
+        await store.dispatch('GenerateRoutes', { permissions })
+        // 根据permissions权限生成可访问的路由表
+        router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+        next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+      } catch (err) {
+        await store.dispatch('FedLogOut')
+        Message.error(err.toString() || 'Verification failed, please login again')
+        next({ path: '/' })
+      }
     } else {
       next()
     }
