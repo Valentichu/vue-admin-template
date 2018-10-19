@@ -17,5 +17,8 @@ module.exports = {
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
       .options({ symbolId: 'icon-[name]' })
+  },
+  configureWebpack: {
+    devtool: 'source-map'
   }
 }
